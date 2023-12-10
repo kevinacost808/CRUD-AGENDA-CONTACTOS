@@ -14,7 +14,7 @@
 <body>
 <h1>Agenda de Contactos:</h1>
 
-<a href="/abrirFormulario">Nuevo Contacto</a>
+<a href="/nuevo" type="button" class="btn btn-primary">Nuevo Contacto</a>
 
 <div th:if="${msgExito != null}">
     [[${msgExito}]]
@@ -33,12 +33,15 @@
     <tbody th:each="contacto : ${contactos}">
     <tr>
         <th scope="row" th:text="${contacto.id}"></th>
-        <td th:text="${contacto.id}"></td>
         <td th:text="${contacto.nombre}"></td>
         <td th:text="${contacto.apellido}"></td>
         <td th:text="${contacto.email}"></td>
         <td th:text="${#temporals.format(contacto.fechaNacimiento, 'dd/MM/YYYY')}"></td>
         <td th:text="${#temporals.format(contacto.fechaRegistro, 'dd/MM/YYYY hh:mm a')}"></td>
+        <td>
+            <a th:href="@{/editar/{id}(id=${contacto.id})}">Editar</a>
+            <a th:href="@{/eliminar/{id}(id=${contacto.id})}">Eliminar</a>
+        </td>
     </tr>
     </tbody>
 </table>

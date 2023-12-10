@@ -12,47 +12,40 @@
     <title>Registro de contacto</title>
 </head>
 <body>
-    <h2>Registro de Contacto</h2>
-    <form action="/agregarContacto" method="post" th:object="${contacto}">
+    <h2>[[${contacto.id ne null ? 'Editar Contacto' : 'Registrar Contacto'}]]</h2>
+
+    <form action="" method="post" th:object="${contacto}">
         <div class="mb-3 row">
             <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control-plaintext" id="nombre" th:field="*{nombre}">
+                <input type="text" class="form-control" id="nombre" th:field="*{nombre}" th:errorClass="is-invalid">
             </div>
-            <div th:errors="*{nombre}">
-
-            </div>
+            <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="invalid-feedback"></div>
         </div>
         <div class="mb-3 row">
-            <label for="apellido" class="col-sm-2 col-form-label">Apellido</label>
+            <label for="apellido" class="col-sm-2 col-form-label" >Apellido</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="apellido" th:field="*{apellido}">
+                <input type="text" class="form-control" id="apellido" th:field="*{apellido}" th:errorClass="is-invalid">
             </div>
-            <div th:errors="*{apellido}">
-
-            </div>
+            <div th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}" class="invalid-feedback"></div>
         </div>
         <div class="mb-3 row">
             <label for="email" class="col-sm-2 col-form-label">Email</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="email" th:field="*{email}">
+                <input type="text" class="form-control" id="email" th:field="*{email}" th:errorClass="is-invalid">
             </div>
-            <div th:errors="*{email}">
-
-            </div>
+            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div>
         </div>
         <div class="mb-3 row">
-            <label for="fechaNacimiento" class="col-sm-2 col-form-label">Fecha de Nacimiento</label>
+            <label for="fechaNacimiento" class="col-sm-2 col-form-label ">Fecha de Nacimiento</label>
             <div class="col-sm-10">
-                <input type="date" class="form-control" id="fechaNacimiento" th:field="*{fechaNacimiento}">
+                <input type="date" class="form-control" id="fechaNacimiento" th:field="*{fechaNacimiento}" th:errorClass="is-invalid">
             </div>
-            <div th:errors="*{fechaNacimiento}">
-
-            </div>
+            <div th:if="${#fields.hasErrors('email')}" th:errors="*{fechaNacimiento}" class="invalid-feedback"></div>
         </div>
 
-        <button type="submit">Guardar</button>
-        <a href="/">Cancelar</a>
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <a href="/" type="button" class="btn btn-ligth">Cancelar</a>
     </form>
 </body>
 </html>

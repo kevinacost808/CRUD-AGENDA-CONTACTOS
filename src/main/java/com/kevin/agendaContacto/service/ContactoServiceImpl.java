@@ -35,7 +35,6 @@ public class ContactoServiceImpl implements ContactoService{
             contactoEditar.setApellido(contacto.getApellido());
             contactoEditar.setEmail(contacto.getEmail());
             contactoEditar.setFechaNacimiento(contacto.getFechaNacimiento());
-            contactoEditar.setFechaRegistro(contacto.getFechaRegistro());
             return contactoRepository.save(contactoEditar);
         }
         return null;

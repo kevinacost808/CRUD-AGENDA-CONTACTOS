@@ -8,12 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.naming.Binding;
-import java.security.PrivateKey;
 import java.util.List;
 
 @Controller
@@ -28,13 +26,13 @@ public class ContactoController {
         return "index";
     }
 
-    @GetMapping("/abrirFormulario")
+    @GetMapping("/nuevo")
     public String abrirFormulario(Model model){
         model.addAttribute("contacto",new Contacto());
         return "contactoFrm";
     }
 
-    @PostMapping("/agregarContacto")
+    @PostMapping("/nuevo")
     public String agregarContacto(@Validated Contacto contacto, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model){
         if(bindingResult.hasErrors()){
             model.addAttribute("contacto", contacto);
@@ -43,6 +41,34 @@ public class ContactoController {
 
         contactoService.agregarContacto(contacto);
         redirectAttributes.addFlashAttribute("msgExito","El contacto se guardó con éxito");
+        return "redirect:/";
+    }
+
+    @GetMapping("/editar/{id}")
+    public String abrirFormularioEditar(@PathVariable Long id, Model model){
+        model.addAttribute("contacto", contactoService.obtenerContactoId(id));
+        return "contactoFrm";
+    }
+
+    @PostMapping("/editar/{id}")
+    public String actualizarContacto(@PathVariable Long id, @Validated Contacto contacto, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model){
+
+        if(bindingResult.hasErrors()){
+            model.addAttribute("contacto", contacto);
+            return "contactoFrm";
+        }
+
+        contactoService.editarContacto(contacto,id);
+
+        redirectAttributes.addFlashAttribute("msgExito","El contacto se actualizó correctamente");
+        return "redirect:/";
+    }
+
+    @GetMapping("/eliminar/{id}")
+    public String eliminarContacto(@PathVariable Long id, RedirectAttributes redirectAttributes){
+        contactoService.eliminarContacto(id);
+        redirectAttributes.addFlashAttribute("msgExito",
+                "El contacto se eliminó correctamente");
         return "redirect:/";
     }
 }
